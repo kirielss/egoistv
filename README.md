@@ -1,0 +1,2 @@
+# egoistv
+a watchparty project
