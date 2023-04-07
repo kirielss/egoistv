@@ -8,3 +8,5 @@ const Chat = ({socket}) => {
         </div>
     )
 }
+
+export default Chat;
