@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 
 const Chat = ({ socket, userName, room }) => {
     const [currentMessage, setCurrentMessage] = useState("");
-    // console.log(currentMessage);
+    const [messageList, setmessageList] = useState([]);
+
     const sendMessage = async () => {
         if (currentMessage !== '') {
             const messageData = {
@@ -16,21 +17,27 @@ const Chat = ({ socket, userName, room }) => {
             };
 
             await socket.emit("send_message", messageData);
+            setmessageList((list) => [...list, messageData]);
         }
     };
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
+            setmessageList((list) => [...list, data])
             console.log(data);
         })
     }, [socket])
 
    return (
-    <div>
+    <div className="chat-window">
       <div className="chat-header">
         <p>Live Chat</p>
       </div>
-      <div className="chat-body"></div>
+      <div className="chat-body">
+        {messageList.map((messageContent) => {
+            return <h1>{messageContent.message}</h1>
+        })}
+      </div>
       <div className="chat-footer">
         <input type="text" placeholder="Hey..." 
         onChange={(e) => setCurrentMessage(e.target.value)}
