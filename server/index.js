@@ -5,6 +5,11 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 app.use(cors());
 
+const { google } = require("googleapis");
+const youtube = google.youtube({
+  version: "v3",
+  auth: "AIzaSyD1k6kweGj76XT3WMREUziP-6CKiS48n3Y"
+});
 
 const server = http.createServer(app);
 
@@ -26,6 +31,31 @@ io.on("connection", (socket) => {
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("receive_message", data);
     });
+
+    socket.on("play_video", (data) => {
+        socket.to(data.room).emit("play_video", data.time);
+    });
+
+    socket.on("pause_video", (data) => {
+        socket.to(data.room).emit("pause_video", data.time);
+    });
+
+    socket.on("seek_video", (data) => {
+        socket.to(data.room).emit("seek_video", data.time);
+    });
+
+    socket.on("search_videos", (data) => {
+        youtube.search.list({
+            part: "id,snippet",
+            q: data.query,
+            type: "video"
+        }).then((response) => {
+            socket.emit("search_results", response.data.items);
+        }).catch((error) => {
+            console.error(error);
+        });
+    });
+
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id);
     });
