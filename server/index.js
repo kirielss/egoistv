@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const { api_key } = require("./config");
+const { api_key } = require("../config.js");
 app.use(cors());
 
 const { google } = require("googleapis");
