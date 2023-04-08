@@ -9,9 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "googleapis": "^114.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-gapi": "^1.0.2",
     "react-scroll-to-bottom": "^4.2.0",
+    "react-youtube": "^10.1.0",
     "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
