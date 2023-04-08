@@ -24,6 +24,7 @@ function App() {
       <Chat 
         socket={socket}
         userName={userName}
+        room={room}
       />
     </div>
   )
