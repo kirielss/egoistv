@@ -3,7 +3,10 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const { api_key } = require("../config.js");
+const config = require("../config.js");
+const api_key = config.api_key;
+
+//const path = `https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&q=${this.q}&type=video&key=${api_key}`
 app.use(cors());
 
 const { google } = require("googleapis");
