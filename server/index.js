@@ -3,12 +3,13 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
+const { api_key } = require("./config");
 app.use(cors());
 
 const { google } = require("googleapis");
 const youtube = google.youtube({
   version: "v3",
-  auth: "AIzaSyD1k6kweGj76XT3WMREUziP-6CKiS48n3Y"
+  auth: api_key
 });
 
 const server = http.createServer(app);
