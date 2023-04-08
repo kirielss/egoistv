@@ -21,7 +21,10 @@ function App() {
       <input type='text' placeholder='Room ID...' onChange={(e) => setRoom(e.target.value)} />
       <button onClick={joinRoom}>Join a Room</button>
 
-      <Chat socket={socket} />
+      <Chat 
+        socket={socket}
+        userName={userName}
+      />
     </div>
   )
 }
