@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("play_video", (data) => {
-        socket.to(data.room).emit("play_video", data.time);
+        socket.to(data.room).emit("play_video", data.url);
     });
 
     socket.on("pause_video", (data) => {
@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("search_videos", (data) => {
+        console.log(data.room);
         youtube.search.list({
             part: "id,snippet",
             q: data.query,

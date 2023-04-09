@@ -54,7 +54,7 @@ const Chat = ({ socket, userName, room }) => {
                  </div>
                </div>
              );
-           })}
+            })}
          </ScrollToBottom>
        </div>
        <div className="chat-footer">
