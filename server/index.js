@@ -65,7 +65,10 @@ socket.playerStatus = { isPlaying: false, time: 0
   socket.on('player_state_change', (data) => {
     io.to(data.room).emit('player_state_change', { state: data.state });
     console.log(    io.to(data.room).emit('player_state_change', { state: data.state })
-)
+    )
+      if (data.state === 'playing') {
+      io.to(data.room).emit(`sync_time`, { time: socket.playerStatus.time });
+    }
   });
 
   socket.on('get_player_status', (data) => {
@@ -73,6 +76,11 @@ socket.playerStatus = { isPlaying: false, time: 0
       isPlaying: socket.playerStatus.isPlaying,
     });
   });
+
+  socket.on('sync_time', (data)=>{
+    console.log(`sync time with ${data.time}`)
+    io.to(data.room).emit('sync_time', {time: data.time})
+  })
 
     socket.on("search_videos", (data) => {
         console.log(data.room);
