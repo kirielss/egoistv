@@ -35,18 +35,44 @@ io.on("connection", (socket) => {
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("receive_message", data);
     });
+socket.playerStatus = { isPlaying: false, time: 0
+ };
 
-    socket.on("play_video", (data) => {
-        socket.to(data.room).emit("play_video", data.url);
+  socket.on('play_video', (data) => {
+    io.to(data.room).emit('play_video', { url: data.url, time: data.time});
+  });
+
+  socket.on("seek_video", (data) => {
+    socket.to(data.room).emit("seek_video", { url: data.url, time: data.time});
+});
+
+   socket.on("send_message", (data) => {
+       socket.to(data.room).emit("receive_message", data);
     });
 
-    socket.on("pause_video", (data) => {
-        socket.to(data.room).emit("pause_video", data.time);
-    });
+ socket.on('player_status', (data) => {
+  socket.playerStatus.isPlaying = data.isPlaying;
+  socket.playerStatus.time = data.time;
+  io.to(data.room).emit('player_status', {
+    isPlaying: socket.playerStatus.isPlaying,
+                time: data.time
 
-    socket.on("seek_video", (data) => {
-        socket.to(data.room).emit("seek_video", data.time);
+  }) 
+  console.log(data.time)
+})
+  
+
+  socket.on('player_state_change', (data) => {
+    io.to(data.room).emit('player_state_change', { state: data.state });
+    console.log(    io.to(data.room).emit('player_state_change', { state: data.state })
+)
+  });
+
+  socket.on('get_player_status', (data) => {
+    io.to(data.room).emit('player_status', {
+      isPlaying: socket.playerStatus.isPlaying,
     });
+  });
 
     socket.on("search_videos", (data) => {
         console.log(data.room);
